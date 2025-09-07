@@ -22,10 +22,17 @@ class PumaCompiler
     {
         foreach (var file in Directory.GetFiles(SourceFolder, "*.puma"))
         {
-            var pumaCode = File.ReadAllText(file);
-            var ast = Parser.ParseCode(pumaCode);
-            var cppCode = CodeGenerator.GenerateCpp(ast);
-            var outFile = Path.Combine(BuildFolder, Path.GetFileNameWithoutExtension(file) + ".cpp");
+            string pumaCode = File.ReadAllText(file);
+
+            // Prefer full path if the parser uses it for diagnostics; otherwise use Path.GetFileName(file)
+            var parseResult = Parser.ParseCode(file, pumaCode);
+
+            // If parser reports an error code > 0, skip the next three lines (code generation & file write)
+            if (parseResult.ErrorCount > 0)
+                continue;
+
+            string cppCode = CodeGenerator.GenerateCpp(parseResult.Ast);
+            string outFile = Path.Combine(BuildFolder, Path.GetFileNameWithoutExtension(file) + ".cpp");
             File.WriteAllText(outFile, cppCode);
         }
     }

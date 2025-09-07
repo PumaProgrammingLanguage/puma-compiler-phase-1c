@@ -36,6 +36,12 @@ class PumaFileAst
 // Example AST classes for extensibility
 class EnumAst
 {
+    public EnumAst(string name, string underlyingType = "int64")
+    {
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+        UnderlyingType = underlyingType ?? throw new ArgumentNullException(nameof(underlyingType));
+    }
+
     public string Name { get; set; }
     public string UnderlyingType { get; set; }
     public List<EnumMemberAst> Members { get; } = new();
@@ -43,24 +49,51 @@ class EnumAst
 
 class EnumMemberAst
 {
+    public EnumMemberAst(string name, string value)
+    {
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+        Value = value ?? throw new ArgumentNullException(nameof(value));
+    }
+
     public string Name { get; set; }
     public string Value { get; set; }
 }
 
 class RecordAst
 {
+    public RecordAst(string name)
+    {
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+    }
+
     public string Name { get; set; }
     public List<RecordMemberAst> Members { get; } = new();
 }
 
 class RecordMemberAst
 {
+    public RecordMemberAst(string name, string type)
+    {
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+        Type = type ?? throw new ArgumentNullException(nameof(type));
+    }
+
     public string Name { get; set; }
     public string Type { get; set; }
 }
 
 class PropertyAst
 {
+    public PropertyAst(string name, string type, string value, string accessModifier = "private", string mutabilityModifier = "", bool isOptional = false)
+    {
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+        Type = type ?? throw new ArgumentNullException(nameof(type));
+        Value = value ?? throw new ArgumentNullException(nameof(value));
+        AccessModifier = accessModifier ?? throw new ArgumentNullException(nameof(accessModifier));
+        MutabilityModifier = mutabilityModifier ?? throw new ArgumentNullException(nameof(mutabilityModifier));
+        IsOptional = isOptional;
+    }
+
     public string Name { get; set; }
     public string Type { get; set; }
     public string Value { get; set; }
@@ -88,6 +121,13 @@ class FinalizeAst
 
 class FunctionAst
 {
+    public FunctionAst(string name, string returnType = "", string accessModifier = "public")
+    {
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+        ReturnType = returnType ?? throw new ArgumentNullException(nameof(returnType));
+        AccessModifier = accessModifier ?? throw new ArgumentNullException(nameof(accessModifier));
+    }
+
     public string Name { get; set; }
     public string ReturnType { get; set; }
     public List<ParameterAst> Parameters { get; } = new();
@@ -97,12 +137,25 @@ class FunctionAst
 
 class DelegateAst
 {
+    public DelegateAst(string name)
+    {
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+    }
+
     public string Name { get; set; }
     public List<ParameterAst> Parameters { get; } = new();
 }
 
 class ParameterAst
 {
+    public ParameterAst(string name, string type, string defaultValue, string mutabilityModifier)
+    {
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+        Type = type ?? throw new ArgumentNullException(nameof(type));
+        DefaultValue = defaultValue ?? throw new ArgumentNullException(nameof(defaultValue));
+        MutabilityModifier = mutabilityModifier ?? throw new ArgumentNullException(nameof(mutabilityModifier));
+    }
+
     public string Name { get; set; }
     public string Type { get; set; }
     public string DefaultValue { get; set; }

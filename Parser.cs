@@ -102,7 +102,7 @@ static class Parser
             {
                 var trimmed = line.Trim();
                 if (!string.IsNullOrEmpty(trimmed) && !trimmed.Contains(","))
-                    ast.Enums.Add(new EnumAst { Name = trimmed });
+                    ast.Enums.Add(new EnumAst(trimmed));
             }
         }
 
@@ -117,7 +117,7 @@ static class Parser
             {
                 var trimmed = line.Trim();
                 if (!string.IsNullOrEmpty(trimmed) && !trimmed.Contains(","))
-                    ast.Records.Add(new RecordAst { Name = trimmed });
+                    ast.Records.Add(new RecordAst(trimmed));
             }
         }
 
@@ -132,7 +132,7 @@ static class Parser
             {
                 var trimmed = line.Trim();
                 if (!string.IsNullOrEmpty(trimmed))
-                    ast.Properties.Add(new PropertyAst { Name = trimmed });
+                    ast.Properties.Add(new PropertyAst(trimmed, "", ""));
             }
         }
 
@@ -190,10 +190,7 @@ static class Parser
                 var nameMatch = Regex.Match(line, @"^([A-Za-z_]\w*)\s*\(");
                 string name = nameMatch.Success ? nameMatch.Groups[1].Value : line.Split(' ', '(', ':').FirstOrDefault() ?? line;
 
-                ast.Functions.Add(new FunctionAst
-                {
-                    Name = name
-                });
+                ast.Functions.Add(new FunctionAst(name));
             }
         }
 

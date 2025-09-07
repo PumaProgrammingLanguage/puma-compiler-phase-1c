@@ -387,24 +387,3 @@ static class CodeGenerator
         return string.Join(Environment.NewLine, lines);
     }
 }
-
-// NOTE: PumaFileAst partial stub (if needed for compilation here):
-// The real implementation should define proper lists and AST node types.
-// This is only a minimal placeholder to avoid compile errors if absent.
-public class PumaFileAst
-{
-    public List<string> Usings { get; } = new();
-    public string? TypeName { get; set; }
-    public string? BaseType { get; set; }
-    public string? TraitName { get; set; }
-    public string? ModuleName { get; set; }
-    public List<string> InheritedTraits { get; } = new();
-    public List<object> Enums { get; } = new();
-    public List<object> Records { get; } = new();
-    public List<object> Properties { get; } = new();
-    public object? Initialize { get; set; }
-    public object? Start { get; set; }
-    public object? Finalize { get; set; }
-    public List<object> Functions { get; } = new();
-    public List<object> Delegates { get; } = new();
-}
